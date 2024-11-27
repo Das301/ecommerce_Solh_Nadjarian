@@ -5,7 +5,7 @@ conn.execute("PRAGMA foreign_keys = ON")
 cursor = conn.cursor()
 
 cursor.execute("""CREATE TABLE if not exists USERS (
-               id INT PRIMARY KEY,
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
                username TEXT UNIQUE NOT NULL,
                password TEXT NOT NULL,
                first_name TEXT NOT NULL,
@@ -17,7 +17,7 @@ cursor.execute("""CREATE TABLE if not exists USERS (
                wallet REAL DEFAULT 0)""")
 
 cursor.execute("""CREATE TABLE if not exists GOODS (
-               id INT PRIMARY KEY,
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
                name TEXT NOT NULL UNIQUE,
                description TEXT NOT NULL,
                price REAL NOT NULL,
@@ -25,7 +25,7 @@ cursor.execute("""CREATE TABLE if not exists GOODS (
                stocks INT NOT NULL DEFAULT 0)""")
 
 cursor.execute("""CREATE TABLE if not exists PURCHASES (
-               id INT PRIMARY KEY,
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
                user TEXT NOT NULL,
                good TEXT NOT NULL,
                quantity INT NOT NULL,
@@ -34,7 +34,7 @@ cursor.execute("""CREATE TABLE if not exists PURCHASES (
                FOREIGN KEY (good) REFERENCES GOODS(name))""")
 
 cursor.execute("""CREATE TABLE if not exists REVIEWS (
-               id INT PRIMARY KEY,
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
                user TEXT NOT NULL,
                good TEXT NOT NULL,
                review TEXT NOT NULL,
@@ -42,3 +42,7 @@ cursor.execute("""CREATE TABLE if not exists REVIEWS (
                FOREIGN KEY (good) REFERENCES GOODS(name))""")
 
 conn.commit()
+
+# cursor.execute("INSERT INTO GOODS(name, description, price, category, stocks) VALUES ('Michelin Soft Sports Tires', 'A set of 4 Michelin soft sports tires, ideal for occasional track days', 600, 'Tire', 10)")
+conn.commit()
+
