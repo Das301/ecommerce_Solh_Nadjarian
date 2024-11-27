@@ -6,7 +6,6 @@ def create_database():
     conn.execute("PRAGMA foreign_keys = ON")
     cursor = conn.cursor()
 
-    # Create USERS table
     cursor.execute("""CREATE TABLE if not exists USERS (
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    username TEXT UNIQUE NOT NULL,
@@ -19,7 +18,6 @@ def create_database():
                    marital_status TEXT NOT NULL,
                    wallet REAL DEFAULT 0)""")
 
-    # Insert sample data
     cursor.execute("""INSERT INTO USERS (username, password, first_name, last_name, age, address, gender, marital_status, wallet)
                       VALUES ('johndoe', 'password123', 'John', 'Doe', 30, '123 Main St', 'Male', 'Single', 50)""")
     cursor.execute("""INSERT INTO USERS (username, password, first_name, last_name, age, address, gender, marital_status, wallet)
