@@ -27,7 +27,25 @@ def submit_review():
 
 @app.route("/update_review", methods=["PUT"])
 def update_review():
-    pass
+    info = request.get_json()
+    user = info["user"]
+    password = info["password"]
+
+    customer = json.loads(requests.get("http://127.0.0.1:3000/get_customer/"+user).content)
+    if customer is not None and customer[2] == password:
+        review = json.loads(requests.get("http://127.0.0.1:3000/get_review/"+user+"/"+info["good"]).content)
+        if review is not None:
+            data = {"user": user,
+                "good": info["good"],
+                "review": info["review"],
+                "rating": info["rating"]}
+            
+            response = requests.post("http://127.0.0.1:3000/update", json=data)
+            return response.content
+        else:
+            return jsonify("No reviews exists for this product")
+    else:
+        return jsonify("Invalid username or password")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=5002)

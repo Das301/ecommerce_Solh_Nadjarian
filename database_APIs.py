@@ -17,6 +17,7 @@ def get_goods():
         data = cursor.fetchall()
         conn.close()
     except:
+        conn.rollback()
         data = "Database Error"
     
     return jsonify(data)
@@ -32,6 +33,7 @@ def get_good(id):
         conn.close()
     except Exception as e:
         print(e)
+        conn.rollback()
         data = "Database Error"
     
     return jsonify(data)
@@ -47,6 +49,7 @@ def get_customer(user):
         conn.close()
     except Exception as e:
         print(e)
+        conn.rollback()
         data = "Database Error"
     
     return jsonify(data)
@@ -61,6 +64,7 @@ def get_good_price(name):
         conn.close()
     except Exception as e:
         print(e)
+        conn.rollback()
         data = "Database Error"
     
     return jsonify(data)
@@ -81,6 +85,7 @@ def perform_transaction():
         message = "Purchase Successful"
     except Exception as e:
         print(e)
+        conn.rollback()
         message = "Database Error"
     
     return jsonify(message)
@@ -99,6 +104,26 @@ def submit():
         message = "Review Submitted Successfully"
     except Exception as e:
         print(e)
+        conn.rollback()
+        message = "Database Error"
+    
+    return jsonify(message)
+
+@app.route("/update", methods=["POST"])
+def update():
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        data = request.get_json()
+
+        cursor.execute("UPDATE REVIEWS SET review = ?, rating = ? WHERE user=? AND good=?", (data["review"], data["rating"], data["user"], data["good"]))
+
+        conn.commit()
+        conn.close()
+        message = "Review updated Successfully"
+    except Exception as e:
+        print(e)
+        conn.rollback()
         message = "Database Error"
     
     return jsonify(message)
@@ -113,6 +138,7 @@ def get_review(user, good):
         conn.close()
     except Exception as e:
         print(e)
+        conn.rollback()
         data = "Database Error"
     
     return jsonify(data)
