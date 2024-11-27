@@ -92,7 +92,7 @@ def submit():
         cursor = conn.cursor()
         data = request.get_json()
 
-        cursor.execute("INSERT INTO REVIEWS (user, good, review) VALUES(?, ?, ?)", (data["user"], data["good"], data["review"]))
+        cursor.execute("INSERT INTO REVIEWS (user, good, review, rating) VALUES(?, ?, ?, ?)", (data["user"], data["good"], data["review"], data["rating"]))
 
         conn.commit()
         conn.close()
@@ -102,6 +102,20 @@ def submit():
         message = "Database Error"
     
     return jsonify(message)
+
+@app.route("/get_review/<string:user>/<string:good>", methods=["GET"])
+def get_review(user, good):
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM REVIEWS WHERE user = ? AND good = ?", (user, good))
+        data = cursor.fetchone()
+        conn.close()
+    except Exception as e:
+        print(e)
+        data = "Database Error"
+    
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=3000)
