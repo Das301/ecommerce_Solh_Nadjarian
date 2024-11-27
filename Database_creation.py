@@ -44,5 +44,7 @@ cursor.execute("""CREATE TABLE if not exists REVIEWS (
 conn.commit()
 
 # cursor.execute("INSERT INTO GOODS(name, description, price, category, stocks) VALUES ('Michelin Soft Sports Tires', 'A set of 4 Michelin soft sports tires, ideal for occasional track days', 600, 'Tire', 10)")
+#cursor.execute("INSERT INTO USERS (username, password, first_name, last_name, age, address, gender, marital_status, wallet) VALUES ('DanySolh21', '24h_LeM@ns', 'Dany', 'Solh', 21, 'Beirut, Lebanon', 'Male', 'Single', 1400)")
+
 conn.commit()
 
