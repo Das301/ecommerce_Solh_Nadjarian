@@ -85,5 +85,23 @@ def perform_transaction():
     
     return jsonify(message)
 
+@app.route("/submit", methods=["POST"])
+def submit():
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        data = request.get_json()
+
+        cursor.execute("INSERT INTO REVIEWS (user, good, review) VALUES(?, ?, ?)", (data["user"], data["good"], data["review"]))
+
+        conn.commit()
+        conn.close()
+        message = "Review Submitted Successfully"
+    except Exception as e:
+        print(e)
+        message = "Database Error"
+    
+    return jsonify(message)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=3000)
