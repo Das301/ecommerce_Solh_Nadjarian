@@ -11,7 +11,7 @@ def submit_review():
     password = info["password"]
 
     customer = json.loads(requests.get("http://127.0.0.1:3000/get_customer/"+user).content)
-    if customer is not None and customer[2] == password:
+    if "error" not in customer and customer[2] == password:
         review = json.loads(requests.get("http://127.0.0.1:3000/get_review/"+user+"/"+info["good"]).content)
         if review is not None:
             return jsonify("Review already exists for this product")
@@ -32,7 +32,7 @@ def update_review():
     password = info["password"]
 
     customer = json.loads(requests.get("http://127.0.0.1:3000/get_customer/"+user).content)
-    if customer is not None and customer[2] == password:
+    if "error" not in customer and customer[2] == password:
         review = json.loads(requests.get("http://127.0.0.1:3000/get_review/"+user+"/"+info["good"]).content)
         if review is not None:
             data = {"user": user,
@@ -41,6 +41,48 @@ def update_review():
                 "rating": info["rating"]}
             
             response = requests.post("http://127.0.0.1:3000/update", json=data)
+            return response.content
+        else:
+            return jsonify("No reviews exists for this product")
+    else:
+        return jsonify("Invalid username or password")
+
+@app.route("/delete_review", methods=["DELETE"])
+def delete_review():
+    info = request.get_json()
+    user = info["user"]
+    password = info["password"]
+
+    customer = json.loads(requests.get("http://127.0.0.1:3000/get_customer/"+user).content)
+    if "error" not in customer and customer[2] == password:
+        review = json.loads(requests.get("http://127.0.0.1:3000/get_review/"+user+"/"+info["good"]).content)
+        if review is not None:
+            data = {"user": user,
+                "good": info["good"]}
+            
+            response = requests.post("http://127.0.0.1:3000/delete", json=data)
+            return response.content
+        else:
+            return jsonify("No reviews exists for this product")
+    else:
+        return jsonify("Invalid username or password")
+
+@app.route("/admin_delete_review", methods=["DELETE"])
+def admin_delete_review():
+    info = request.get_json()
+    user = info["user"]
+    admin_user = info["admin_user"]
+    password = info["password"]
+
+    admin = json.loads(requests.get("http://127.0.0.1:3000/get_admin/"+admin_user).content)
+    print(admin)
+    if "error" not in admin and admin[2] == password:
+        review = json.loads(requests.get("http://127.0.0.1:3000/get_review/"+user+"/"+info["good"]).content)
+        if review is not None:
+            data = {"user": user,
+                "good": info["good"]}
+            
+            response = requests.post("http://127.0.0.1:3000/delete", json=data)
             return response.content
         else:
             return jsonify("No reviews exists for this product")

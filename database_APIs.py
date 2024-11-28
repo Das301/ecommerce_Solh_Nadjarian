@@ -164,7 +164,7 @@ def get_goods():
         conn.close()
     except:
         conn.rollback()
-        data = "Database Error"
+        return jsonify({"error": "Database Error"}), 500
     
     return jsonify(data)
 
@@ -180,23 +180,7 @@ def get_good(id):
     except Exception as e:
         print(e)
         conn.rollback()
-        data = "Database Error"
-    
-    return jsonify(data)
-
-
-@app.route("/get_customer/<string:user>", methods=["GET"])
-def get_customer(user):
-    try:
-        conn = connect_to_db()
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM USERS WHERE username = ?", (user,))
-        data = cursor.fetchone()
-        conn.close()
-    except Exception as e:
-        print(e)
-        conn.rollback()
-        data = "Database Error"
+        return jsonify({"error": "Database Error"}), 500
     
     return jsonify(data)
 
@@ -211,7 +195,7 @@ def get_good_price(name):
     except Exception as e:
         print(e)
         conn.rollback()
-        data = "Database Error"
+        return jsonify({"error": "Database Error"}), 500
     
     return jsonify(data)
 
@@ -232,7 +216,7 @@ def perform_transaction():
     except Exception as e:
         print(e)
         conn.rollback()
-        message = "Database Error"
+        return jsonify({"error": "Database Error"}), 500
     
     return jsonify(message)
 
@@ -251,7 +235,7 @@ def submit():
     except Exception as e:
         print(e)
         conn.rollback()
-        message = "Database Error"
+        return jsonify({"error": "Database Error"}), 500
     
     return jsonify(message)
 
@@ -270,7 +254,26 @@ def update():
     except Exception as e:
         print(e)
         conn.rollback()
-        message = "Database Error"
+        return jsonify({"error": "Database Error"}), 500
+    
+    return jsonify(message)
+
+@app.route("/delete", methods=["POST"])
+def delete():
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        data = request.get_json()
+
+        cursor.execute("DELETE FROM REVIEWS WHERE user=? AND good=?", (data["user"], data["good"]))
+
+        conn.commit()
+        conn.close()
+        message = "Review Deleted Successfully"
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return jsonify({"error": "Database Error"}), 500
     
     return jsonify(message)
 
@@ -285,9 +288,26 @@ def get_review(user, good):
     except Exception as e:
         print(e)
         conn.rollback()
-        data = "Database Error"
+        return jsonify({"error": "Database Error"}), 500
     
     return jsonify(data)
+
+@app.route("/get_admin/<string:username>", methods=["GET"])
+def get_admin(username):
+    """Fetch an admin by username."""
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM ADMINS WHERE username = ?", (username,))
+        customer = cursor.fetchone()
+        conn.close()
+        if customer:
+            return jsonify(customer)
+        else:
+            return jsonify({"error": "User not found"}), 404
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Database Error"}), 500
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=3000)

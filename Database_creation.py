@@ -42,9 +42,18 @@ cursor.execute("""CREATE TABLE if not exists REVIEWS (
                FOREIGN KEY (user) REFERENCES USERS(username),
                FOREIGN KEY (good) REFERENCES GOODS(name))""")
 
+cursor.execute("""CREATE TABLE if not exists ADMINS (
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
+               username TEXT UNIQUE NOT NULL,
+               password TEXT NOT NULL,
+               first_name TEXT NOT NULL,
+               last_name TEXT NOT NULL,
+               age INT NOT NULL,
+               address TEXT NOT NULL)""")
+
 conn.commit()
 
-
+cursor.execute("INSERT INTO ADMINS (username, password, first_name, last_name, age, address) VALUES ('Das35', '24h_D@yt0n@', 'Dany', 'Solh', 21, 'Beirut, Lebanon')")
 cursor.execute("INSERT INTO GOODS(name, description, price, category, stocks) VALUES ('Michelin Soft Sports Tires', 'A set of 4 Michelin soft sports tires, ideal for occasional track days', 600, 'Tire', 10)")
 cursor.execute("INSERT INTO USERS (username, password, first_name, last_name, age, address, gender, marital_status, wallet) VALUES ('DanySolh21', '24h_LeM@ns', 'Dany', 'Solh', 21, 'Beirut, Lebanon', 'Male', 'Single', 1400)")
 cursor.execute("INSERT INTO GOODS(name, description, price, category, stocks) VALUES('Lug Nuts', 'A set of 20 lug nuts for a variety of tires', 20, 'Tires', 5)")
