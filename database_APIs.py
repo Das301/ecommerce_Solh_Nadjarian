@@ -322,6 +322,25 @@ def get_reviews_user(user):
     
     return jsonify(data)
 
+@app.route("/flag", methods=["POST"])
+def flag():
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        data = request.get_json()
+
+        cursor.execute("UPDATE REVIEWS SET flag=? WHERE user=? AND good=?", (data["flag"], data["user"], data["good"]))
+
+        conn.commit()
+        conn.close()
+        message = "Flag Changed Successfully"
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return jsonify({"error": "Database Error"}), 500
+    
+    return jsonify(message)
+
 @app.route("/get_admin/<string:username>", methods=["GET"])
 def get_admin(username):
     """Fetch an admin by username."""

@@ -110,5 +110,11 @@ def get_user_review(user):
         return jsonify("This user didn't submit any reviews")
     return reviews
 
+@app.route("/flag_review", methods=["PUT"])
+def flag_review():
+    info = request.get_json()
+    response = requests.post("http://127.0.0.1:3000/flag", json=info)
+    return response.content
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=5002)

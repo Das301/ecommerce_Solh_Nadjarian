@@ -39,6 +39,7 @@ cursor.execute("""CREATE TABLE if not exists REVIEWS (
                good TEXT NOT NULL,
                review TEXT NOT NULL,
                rating REAL NOT NULL CHECK (rating>=0 AND rating<=10),
+               flag INTEGET NOT NULL DEFAULT 0 CHECK(flag=0 OR flag=1),
                FOREIGN KEY (user) REFERENCES USERS(username),
                FOREIGN KEY (good) REFERENCES GOODS(name))""")
 
