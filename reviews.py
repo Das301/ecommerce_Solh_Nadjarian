@@ -89,5 +89,13 @@ def admin_delete_review():
     else:
         return jsonify("Invalid username or password")
 
+@app.route("/get_review/<string:user>/<string:good>", methods=["GET"])
+def get_review(user, good):
+    review = requests.get("http://127.0.0.1:3000/get_review/"+user+"/"+good).content
+    if review is None:
+        return jsonify("This user didn't review this product")
+    return review
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=5002)
