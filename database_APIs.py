@@ -153,7 +153,79 @@ def update_customer(username):
     except Exception as e:
         print(e)
         return jsonify({"error": "Database Error"}), 500
+
+@app.route("/add_good", methods=["POST"])
+def add_good():
+    """Add a new good to the inventory."""
+    data = request.get_json()
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute("""INSERT INTO GOODS (name, category, price, description, stocks)
+                          VALUES (?, ?, ?, ?, ?)""",
+                       (data["name"], data["category"], data["price"], data["description"], data["stocks"]))
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "Good added successfully"}), 201
+    except sqlite3.IntegrityError:
+        return jsonify({"error": "Good with the same name already exists"}), 400
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Database Error"}), 500
+
+@app.route("/deduct_good/<int:id>", methods=["PATCH"])
+def deduct_good(id):
+    """Deduct a quantity of a good from the inventory."""
+    data = request.get_json()
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        # Get current stock
+        cursor.execute("SELECT stocks FROM GOODS WHERE id = ?", (id,))
+        current_stock = cursor.fetchone()
+        if not current_stock:
+            return jsonify({"error": "Good not found"}), 404
+
+        # Ensure enough stock is available
+        current_stock = current_stock[0]
+        if data["quantity"] > current_stock:
+            return jsonify({"error": "Not enough stock available"}), 400
+
+        # Deduct stock
+        cursor.execute("UPDATE GOODS SET stocks = stocks - ? WHERE id = ?", (data["quantity"], id))
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "Stock deducted successfully"}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Database Error"}), 500
+
+@app.route("/update_good/<int:id>", methods=["PATCH"])
+def update_good(id):
+    """Update one or more fields of a good."""
+    data = request.get_json()
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        fields = []
+        values = []
+        for key, value in data.items():
+            fields.append(f"{key} = ?")
+            values.append(value)
+        query = f"UPDATE GOODS SET {', '.join(fields)} WHERE id = ?"
+        values.append(id)
+
+        cursor.execute(query, values)
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "Good updated successfully"}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Database Error"}), 500
     
+        
 @app.route("/get_goods", methods=["POST", "GET"])
 def get_goods():
     try:
