@@ -292,6 +292,36 @@ def get_review(user, good):
     
     return jsonify(data)
 
+@app.route("/get_reviews_product/<string:good>", methods=["GET"])
+def get_reviews_product(good):
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM REVIEWS WHERE good = ?", (good, ))
+        data = cursor.fetchall()
+        conn.close()
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return jsonify({"error": "Database Error"}), 500
+    
+    return jsonify(data)
+
+@app.route("/get_reviews_user/<string:user>", methods=["GET"])
+def get_reviews_user(user):
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM REVIEWS WHERE user = ?", (user, ))
+        data = cursor.fetchall()
+        conn.close()
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return jsonify({"error": "Database Error"}), 500
+    
+    return jsonify(data)
+
 @app.route("/get_admin/<string:username>", methods=["GET"])
 def get_admin(username):
     """Fetch an admin by username."""

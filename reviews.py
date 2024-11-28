@@ -96,6 +96,19 @@ def get_review(user, good):
         return jsonify("This user didn't review this product")
     return review
 
+@app.route("/get_product_review/<string:good>", methods=["GET"])
+def get_product_review(good):
+    reviews = requests.get("http://127.0.0.1:3000/get_reviews_product/"+good).content
+    if len(json.loads(reviews))==0:
+        return jsonify("This product doesn't have any reviews")
+    return reviews
+
+@app.route("/get_user_review/<string:user>", methods=["GET"])
+def get_user_review(user):
+    reviews = requests.get("http://127.0.0.1:3000/get_reviews_user/"+user).content
+    if len(json.loads(reviews))==0:
+        return jsonify("This user didn't submit any reviews")
+    return reviews
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=5002)
