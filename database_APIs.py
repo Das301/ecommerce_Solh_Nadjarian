@@ -153,7 +153,7 @@ def update_customer(username):
     except Exception as e:
         print(e)
         return jsonify({"error": "Database Error"}), 500
-
+    
 @app.route("/add_good", methods=["POST"])
 def add_good():
     """Add a new good to the inventory."""
@@ -181,18 +181,15 @@ def deduct_good(id):
         conn = connect_to_db()
         cursor = conn.cursor()
 
-        # Get current stock
         cursor.execute("SELECT stocks FROM GOODS WHERE id = ?", (id,))
         current_stock = cursor.fetchone()
         if not current_stock:
             return jsonify({"error": "Good not found"}), 404
-
-        # Ensure enough stock is available
+        
         current_stock = current_stock[0]
         if data["quantity"] > current_stock:
             return jsonify({"error": "Not enough stock available"}), 400
-
-        # Deduct stock
+        
         cursor.execute("UPDATE GOODS SET stocks = stocks - ? WHERE id = ?", (data["quantity"], id))
         conn.commit()
         conn.close()
@@ -225,7 +222,7 @@ def update_good(id):
         print(e)
         return jsonify({"error": "Database Error"}), 500
     
-        
+
 @app.route("/get_goods", methods=["POST", "GET"])
 def get_goods():
     try:
@@ -394,25 +391,6 @@ def get_reviews_user(user):
     
     return jsonify(data)
 
-@app.route("/flag", methods=["POST"])
-def flag():
-    try:
-        conn = connect_to_db()
-        cursor = conn.cursor()
-        data = request.get_json()
-
-        cursor.execute("UPDATE REVIEWS SET flag=? WHERE user=? AND good=?", (data["flag"], data["user"], data["good"]))
-
-        conn.commit()
-        conn.close()
-        message = "Flag Changed Successfully"
-    except Exception as e:
-        print(e)
-        conn.rollback()
-        return jsonify({"error": "Database Error"}), 500
-    
-    return jsonify(message)
-
 @app.route("/get_admin/<string:username>", methods=["GET"])
 def get_admin(username):
     """Fetch an admin by username."""
@@ -429,6 +407,7 @@ def get_admin(username):
     except Exception as e:
         print(e)
         return jsonify({"error": "Database Error"}), 500
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=3000)

@@ -4,7 +4,7 @@ import json
 
 app = Flask(__name__)
 
-BASE_URL = "http://127.0.0.1:3001"  # Backend API for Customer Service
+BASE_URL = "http://127.0.0.1:3001" 
 
 @app.route("/get_all_customers", methods=["GET"])
 def get_all_customers():
@@ -66,4 +66,4 @@ def update_customer(username):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True, port=5001)
+    app.run(host="0.0.0.0", debug=True, port=5003)

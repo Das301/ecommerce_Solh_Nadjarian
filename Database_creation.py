@@ -59,4 +59,3 @@ cursor.execute("INSERT INTO GOODS(name, description, price, category, stocks) VA
 cursor.execute("INSERT INTO USERS (username, password, first_name, last_name, age, address, gender, marital_status, wallet) VALUES ('DanySolh21', '24h_LeM@ns', 'Dany', 'Solh', 21, 'Beirut, Lebanon', 'Male', 'Single', 1400)")
 cursor.execute("INSERT INTO GOODS(name, description, price, category, stocks) VALUES('Lug Nuts', 'A set of 20 lug nuts for a variety of tires', 20, 'Tires', 5)")
 conn.commit()
-
