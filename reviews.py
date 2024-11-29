@@ -4,7 +4,7 @@ import json
 
 app = Flask(__name__)
 
-@app.route("/submit_review", methods=["POST"])
+@app.route("/submit_review", methods=["POST", "GET"])
 def submit_review():
     info = request.get_json()
     user = info["user"]
@@ -25,7 +25,7 @@ def submit_review():
     else:
         return jsonify("Invalid username or password")
 
-@app.route("/update_review", methods=["PUT"])
+@app.route("/update_review", methods=["PUT", "GET"])
 def update_review():
     info = request.get_json()
     user = info["user"]
@@ -47,7 +47,7 @@ def update_review():
     else:
         return jsonify("Invalid username or password")
 
-@app.route("/delete_review", methods=["DELETE"])
+@app.route("/delete_review", methods=["DELETE", "GET"])
 def delete_review():
     info = request.get_json()
     user = info["user"]
@@ -67,7 +67,7 @@ def delete_review():
     else:
         return jsonify("Invalid username or password")
 
-@app.route("/admin_delete_review", methods=["DELETE"])
+@app.route("/admin_delete_review", methods=["DELETE", "GET"])
 def admin_delete_review():
     info = request.get_json()
     user = info["user"]
@@ -75,7 +75,6 @@ def admin_delete_review():
     password = info["password"]
 
     admin = json.loads(requests.get("http://127.0.0.1:3000/get_admin/"+admin_user).content)
-    print(admin)
     if "error" not in admin and admin[2] == password:
         review = json.loads(requests.get("http://127.0.0.1:3000/get_review/"+user+"/"+info["good"]).content)
         if review is not None:
@@ -110,7 +109,7 @@ def get_user_review(user):
         return jsonify("This user didn't submit any reviews")
     return reviews
 
-@app.route("/flag_review", methods=["PUT"])
+@app.route("/flag_review", methods=["PUT", "GET"])
 def flag_review():
     info = request.get_json()
     response = requests.post("http://127.0.0.1:3000/flag", json=info)
