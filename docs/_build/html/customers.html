@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>customers module &mdash; EECE 435L Project 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="database_APIs module" href="database_APIs.html" />
+    <link rel="prev" title="Database_creation module" href="Database_creation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            EECE 435L Project
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">ecommerce_Solh_Nadjarian</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Database_creation.html">Database_creation module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">customers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#customers.charge_wallet"><code class="docutils literal notranslate"><span class="pre">charge_wallet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customers.deduct_wallet"><code class="docutils literal notranslate"><span class="pre">deduct_wallet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customers.delete_customer"><code class="docutils literal notranslate"><span class="pre">delete_customer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customers.get_all_customers"><code class="docutils literal notranslate"><span class="pre">get_all_customers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customers.get_customer"><code class="docutils literal notranslate"><span class="pre">get_customer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customers.register_customer"><code class="docutils literal notranslate"><span class="pre">register_customer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customers.update_customer"><code class="docutils literal notranslate"><span class="pre">update_customer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="database_APIs.html">database_APIs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inventory.html">inventory module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sales.html">sales module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_reviews.html">test_reviews module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_sales.html">test_sales module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">EECE 435L Project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">ecommerce_Solh_Nadjarian</a></li>
+      <li class="breadcrumb-item active">customers module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/customers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-customers">
+<span id="customers-module"></span><h1>customers module<a class="headerlink" href="#module-customers" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="customers.charge_wallet">
+<span class="sig-prename descclassname"><span class="pre">customers.</span></span><span class="sig-name descname"><span class="pre">charge_wallet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/customers.html#charge_wallet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#customers.charge_wallet" title="Link to this definition"></a></dt>
+<dd><p>Add funds to a customer’s wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer whose wallet is to be charged.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success message if wallet charging is successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="customers.deduct_wallet">
+<span class="sig-prename descclassname"><span class="pre">customers.</span></span><span class="sig-name descname"><span class="pre">deduct_wallet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/customers.html#deduct_wallet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#customers.deduct_wallet" title="Link to this definition"></a></dt>
+<dd><p>Deduct funds from a customer’s wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer whose wallet is to be deducted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success message if deduction is successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="customers.delete_customer">
+<span class="sig-prename descclassname"><span class="pre">customers.</span></span><span class="sig-name descname"><span class="pre">delete_customer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/customers.html#delete_customer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#customers.delete_customer" title="Link to this definition"></a></dt>
+<dd><p>Delete a customer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success message if deletion is successful, or an error message if the customer is not found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="customers.get_all_customers">
+<span class="sig-prename descclassname"><span class="pre">customers.</span></span><span class="sig-name descname"><span class="pre">get_all_customers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/customers.html#get_all_customers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#customers.get_all_customers" title="Link to this definition"></a></dt>
+<dd><p>Fetch all customers.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="customers.get_customer">
+<span class="sig-prename descclassname"><span class="pre">customers.</span></span><span class="sig-name descname"><span class="pre">get_customer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/customers.html#get_customer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#customers.get_customer" title="Link to this definition"></a></dt>
+<dd><p>Fetch a customer by username.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer to fetch.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Customer details if found, otherwise a ‘not found’ message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="customers.register_customer">
+<span class="sig-prename descclassname"><span class="pre">customers.</span></span><span class="sig-name descname"><span class="pre">register_customer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/customers.html#register_customer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#customers.register_customer" title="Link to this definition"></a></dt>
+<dd><p>Register a new customer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Success message if registration is successful.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="customers.update_customer">
+<span class="sig-prename descclassname"><span class="pre">customers.</span></span><span class="sig-name descname"><span class="pre">update_customer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/customers.html#update_customer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#customers.update_customer" title="Link to this definition"></a></dt>
+<dd><p>Update a customer’s details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer whose details are to be updated.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success message if update is successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Database_creation.html" class="btn btn-neutral float-left" title="Database_creation module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="database_APIs.html" class="btn btn-neutral float-right" title="database_APIs module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Dany Solh, Arman Nadjarian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

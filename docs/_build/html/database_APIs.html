@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>database_APIs module &mdash; EECE 435L Project 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="inventory module" href="inventory.html" />
+    <link rel="prev" title="customers module" href="customers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            EECE 435L Project
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">ecommerce_Solh_Nadjarian</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Database_creation.html">Database_creation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customers.html">customers module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">database_APIs module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.add_good"><code class="docutils literal notranslate"><span class="pre">add_good()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.charge_wallet"><code class="docutils literal notranslate"><span class="pre">charge_wallet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.connect_to_db"><code class="docutils literal notranslate"><span class="pre">connect_to_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.deduct_good"><code class="docutils literal notranslate"><span class="pre">deduct_good()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.deduct_wallet"><code class="docutils literal notranslate"><span class="pre">deduct_wallet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.delete"><code class="docutils literal notranslate"><span class="pre">delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.delete_customer"><code class="docutils literal notranslate"><span class="pre">delete_customer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.flag"><code class="docutils literal notranslate"><span class="pre">flag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.get_admin"><code class="docutils literal notranslate"><span class="pre">get_admin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.get_all_customers"><code class="docutils literal notranslate"><span class="pre">get_all_customers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.get_customer"><code class="docutils literal notranslate"><span class="pre">get_customer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.get_good"><code class="docutils literal notranslate"><span class="pre">get_good()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.get_good_price"><code class="docutils literal notranslate"><span class="pre">get_good_price()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.get_goods"><code class="docutils literal notranslate"><span class="pre">get_goods()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.get_review"><code class="docutils literal notranslate"><span class="pre">get_review()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.get_reviews_product"><code class="docutils literal notranslate"><span class="pre">get_reviews_product()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.get_reviews_user"><code class="docutils literal notranslate"><span class="pre">get_reviews_user()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.perform_transaction"><code class="docutils literal notranslate"><span class="pre">perform_transaction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.register_customer"><code class="docutils literal notranslate"><span class="pre">register_customer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.submit"><code class="docutils literal notranslate"><span class="pre">submit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.update"><code class="docutils literal notranslate"><span class="pre">update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.update_customer"><code class="docutils literal notranslate"><span class="pre">update_customer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database_APIs.update_good"><code class="docutils literal notranslate"><span class="pre">update_good()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inventory.html">inventory module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sales.html">sales module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_reviews.html">test_reviews module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_sales.html">test_sales module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">EECE 435L Project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">ecommerce_Solh_Nadjarian</a></li>
+      <li class="breadcrumb-item active">database_APIs module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/database_APIs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-database_APIs">
+<span id="database-apis-module"></span><h1>database_APIs module<a class="headerlink" href="#module-database_APIs" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.add_good">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">add_good</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#add_good"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.add_good" title="Link to this definition"></a></dt>
+<dd><p>Add a new good to the inventory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Success or error response.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.charge_wallet">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">charge_wallet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#charge_wallet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.charge_wallet" title="Link to this definition"></a></dt>
+<dd><p>Add funds to a customer’s wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success or error response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.connect_to_db">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">connect_to_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#connect_to_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.connect_to_db" title="Link to this definition"></a></dt>
+<dd><p>Establish a connection to the SQLite database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SQLite connection object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>sqlite3.Connection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.deduct_good">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">deduct_good</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#deduct_good"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.deduct_good" title="Link to this definition"></a></dt>
+<dd><p>Deduct a quantity of a good from the inventory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – The ID of the good.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success or error response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.deduct_wallet">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">deduct_wallet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#deduct_wallet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.deduct_wallet" title="Link to this definition"></a></dt>
+<dd><p>Deduct funds from a customer’s wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success or error response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.delete">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.delete" title="Link to this definition"></a></dt>
+<dd><p>Deletes a customer’s review of a product. Must pass in the post request the user’s username, his password, and the reviewed good.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Success message if delete is successful. Error message if submission doesn’t exist or other error occured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.delete_customer">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">delete_customer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#delete_customer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.delete_customer" title="Link to this definition"></a></dt>
+<dd><p>Delete a customer by username.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success or error response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.flag">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">flag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#flag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.flag" title="Link to this definition"></a></dt>
+<dd><p>Allows to flag a customer’s review by either a user or an admin. Need to pass in the post request the flag’s value, the reviewed good, and the corresponding username.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Success message if flag changed successfully. Error message in case of a problem.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.get_admin">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">get_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#get_admin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.get_admin" title="Link to this definition"></a></dt>
+<dd><p>Fetch an admin by username.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.get_all_customers">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">get_all_customers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#get_all_customers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.get_all_customers" title="Link to this definition"></a></dt>
+<dd><p>Fetch all customers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of all customers in the database or error response.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.get_customer">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">get_customer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#get_customer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.get_customer" title="Link to this definition"></a></dt>
+<dd><p>Fetch a customer by username.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Customer details or error response if not found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.get_good">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">get_good</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#get_good"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.get_good" title="Link to this definition"></a></dt>
+<dd><p>Get a product’s details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – The product’s id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If successful, the product’s details. Else, an error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.get_good_price">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">get_good_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#get_good_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.get_good_price" title="Link to this definition"></a></dt>
+<dd><p>Get a product’s price.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The product’s name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If successful, the product’s price. Else, an error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.get_goods">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">get_goods</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#get_goods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.get_goods" title="Link to this definition"></a></dt>
+<dd><p>Get all goods with a stock greater than 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If success, all the available goods. Else, error message in case of a problem.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.get_review">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">get_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">good</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#get_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.get_review" title="Link to this definition"></a></dt>
+<dd><p>Get a customer’s review of a product.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>str</em>) – The username of the customer.</p></li>
+<li><p><strong>good</strong> (<em>str</em>) – The reviewed good</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If successful, the review submitted by the user about the product. Else, an error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.get_reviews_product">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">get_reviews_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">good</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#get_reviews_product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.get_reviews_product" title="Link to this definition"></a></dt>
+<dd><p>Get all reviews of a product.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>good</strong> (<em>str</em>) – The reviewed good</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If successful, the reviews of the product. Else, an error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.get_reviews_user">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">get_reviews_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#get_reviews_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.get_reviews_user" title="Link to this definition"></a></dt>
+<dd><p>Get all reviews submitted by a customer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> (<em>str</em>) – The username of the customer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If successful, all reviews submitted by a customer. Else, an error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.perform_transaction">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">perform_transaction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#perform_transaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.perform_transaction" title="Link to this definition"></a></dt>
+<dd><p>Register a new transaction. Need to pass in the post request the username, the good, the quantity, and the total cost.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Success message if transaction is successful. Else, error message in case of a problem.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.register_customer">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">register_customer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#register_customer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.register_customer" title="Link to this definition"></a></dt>
+<dd><p>Register a new customer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Success message or error response.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.submit">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#submit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.submit" title="Link to this definition"></a></dt>
+<dd><p>Submits a customer’s review of a product. Must pass in the post request the user’s username, his password, the reviewed good, the review, and the rating.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Success message if submission is successful. Error message if submission already exists or other error occured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.update">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.update" title="Link to this definition"></a></dt>
+<dd><p>Updates a customer’s review of a product. Must pass in the post request the user’s username, his password, the reviewed good, the review, and the rating.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Success message if update is successful. Error message if submission doesn’t exist or other error occured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.update_customer">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">update_customer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#update_customer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.update_customer" title="Link to this definition"></a></dt>
+<dd><p>Update a customer’s details dynamically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username of the customer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success or error response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="database_APIs.update_good">
+<span class="sig-prename descclassname"><span class="pre">database_APIs.</span></span><span class="sig-name descname"><span class="pre">update_good</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_APIs.html#update_good"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_APIs.update_good" title="Link to this definition"></a></dt>
+<dd><p>Update details of a good.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – The ID of the good.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success or error response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flask.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="customers.html" class="btn btn-neutral float-left" title="customers module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inventory.html" class="btn btn-neutral float-right" title="inventory module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Dany Solh, Arman Nadjarian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
