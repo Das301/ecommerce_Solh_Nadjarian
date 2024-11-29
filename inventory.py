@@ -1,29 +1,30 @@
 from flask import Flask, request, jsonify
 import requests
+import json
 
 app = Flask(__name__)
-
-BASE_URL = "http://127.0.0.1:3002"  # Backend API for Inventory Service
 
 @app.route("/add_good", methods=["POST"])
 def add_good():
     """Add a new good to the inventory."""
-    data = request.get_json()
-    response = requests.post(f"{BASE_URL}/add_good", json=data)
+    info = request.get_json()
+    response = requests.post("http://127.0.0.1:3000/add_good", json=info)
     return response.content
 
-@app.route("/deduct_good/<int:id>", methods=["PATCH"])
-def deduct_good(id):
-    """Deduct a quantity of a good from the inventory."""
-    data = request.get_json()
-    response = requests.patch(f"{BASE_URL}/deduct_good/{id}", json=data)
+
+@app.route("/deduct_good", methods=["PATCH"])
+def deduct_good():
+    """Deduct stock for a specific good."""
+    info = request.get_json()
+    response = requests.patch(f"http://127.0.0.1:3000/deduct_good/{info['id']}", json={"quantity": info["quantity"]})
     return response.content
 
-@app.route("/update_good/<int:id>", methods=["PATCH"])
-def update_good(id):
-    """Update one or more fields of a good."""
-    data = request.get_json()
-    response = requests.patch(f"{BASE_URL}/update_good/{id}", json=data)
+
+@app.route("/update_good", methods=["PATCH"])
+def update_good():
+    """Update details of a good."""
+    info = request.get_json()
+    response = requests.patch(f"http://127.0.0.1:3000/update_good/{info['id']}", json=info["updates"])
     return response.content
 
 if __name__ == "__main__":
