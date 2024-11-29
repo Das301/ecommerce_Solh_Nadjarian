@@ -14,7 +14,7 @@ def get_good_details(id):
     response = requests.get("http://127.0.0.1:3000/get_good/"+str(id))
     return response.content
 
-@app.route("/record_sales", methods=["POST"])
+@app.route("/record_sales", methods=["POST", "GET"])
 def record_sales():
     info = request.get_json()
     user = info["user"]
@@ -23,8 +23,8 @@ def record_sales():
 
     customer = json.loads(requests.get("http://127.0.0.1:3000/get_customer/"+user).content)
     price = json.loads(requests.get("http://127.0.0.1:3000/get_good_price/"+good).content)
-    if customer=="Database Error" or price == "Database Error":
-        return jsonify("Database Error")
+    if "error" in customer or "error" in price:
+        return jsonify({"error": "Database Error"}), 500
     
     total_amount = price[0]*quantity
     if total_amount > customer[-1]:
