@@ -34,7 +34,7 @@ def submit_review():
 @app.route("/update_review", methods=["PUT", "GET"])
 def update_review():
     """
-    Updates a customer's review of a product. Must pass in the post request the user's username, his password, the reviewed good, the review, and the rating.
+    Updates a customer's review of a product. Must pass in the put request the user's username, his password, the reviewed good, the review, and the rating.
 
     :return: Success message if update is successful. Error message if submission doesn't exist or other error occured.
     :rtype: flask.Response
@@ -62,7 +62,7 @@ def update_review():
 @app.route("/delete_review", methods=["DELETE", "GET"])
 def delete_review():
     """
-    Deletes a customer's review of a product. Must pass in the post request the user's username, his password, and the reviewed good.
+    Deletes a customer's review of a product. Must pass in the delete request the user's username, his password, and the reviewed good.
 
     :return: Success message if delete is successful. Error message if submission doesn't exist or other error occured.
     :rtype: flask.Response

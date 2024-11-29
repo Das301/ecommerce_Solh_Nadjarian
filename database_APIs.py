@@ -302,6 +302,12 @@ def update_good(id):
 
 @app.route("/get_goods", methods=["POST", "GET"])
 def get_goods():
+    """
+    Get all goods with a stock greater than 0.
+
+    :return: If success, all the available goods. Else, error message in case of a problem.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -317,6 +323,14 @@ def get_goods():
 
 @app.route("/get_good/<int:id>", methods=["POST", "GET"])
 def get_good(id):
+    """
+    Get a product's details.
+
+    :param id: The product's id.
+    :type id: int
+    :return: If successful, the product's details. Else, an error message.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -332,6 +346,14 @@ def get_good(id):
 
 @app.route("/get_good_price/<string:name>", methods=["GET"])
 def get_good_price(name):
+    """
+    Get a product's price.
+
+    :param name: The product's name.
+    :type name: str
+    :return: If successful, the product's price. Else, an error message.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -347,6 +369,12 @@ def get_good_price(name):
 
 @app.route("/perform_transaction", methods=["POST"])
 def perform_transaction():
+    """
+    Register a new transaction. Need to pass in the post request the username, the good, the quantity, and the total cost. 
+
+    :return: Success message if transaction is successful. Else, error message in case of a problem.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -368,6 +396,12 @@ def perform_transaction():
 
 @app.route("/submit", methods=["POST"])
 def submit():
+    """
+    Submits a customer's review of a product. Must pass in the post request the user's username, his password, the reviewed good, the review, and the rating.
+
+    :return: Success message if submission is successful. Error message if submission already exists or other error occured.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -387,6 +421,12 @@ def submit():
 
 @app.route("/update", methods=["POST"])
 def update():
+    """
+    Updates a customer's review of a product. Must pass in the post request the user's username, his password, the reviewed good, the review, and the rating.
+
+    :return: Success message if update is successful. Error message if submission doesn't exist or other error occured.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -406,6 +446,12 @@ def update():
 
 @app.route("/delete", methods=["POST"])
 def delete():
+    """
+    Deletes a customer's review of a product. Must pass in the post request the user's username, his password, and the reviewed good.
+
+    :return: Success message if delete is successful. Error message if submission doesn't exist or other error occured.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -425,6 +471,16 @@ def delete():
 
 @app.route("/get_review/<string:user>/<string:good>", methods=["GET"])
 def get_review(user, good):
+    """
+    Get a customer's review of a product.
+
+    :param user: The username of the customer.
+    :type user: str
+    :param good: The reviewed good
+    :type good: str
+    :return: If successful, the review submitted by the user about the product. Else, an error message.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -440,6 +496,14 @@ def get_review(user, good):
 
 @app.route("/get_reviews_product/<string:good>", methods=["GET"])
 def get_reviews_product(good):
+    """
+    Get all reviews of a product.
+
+    :param good: The reviewed good
+    :type good: str
+    :return: If successful, the reviews of the product. Else, an error message.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -455,6 +519,14 @@ def get_reviews_product(good):
 
 @app.route("/get_reviews_user/<string:user>", methods=["GET"])
 def get_reviews_user(user):
+    """
+    Get all reviews submitted by a customer.
+
+    :param user: The username of the customer.
+    :type user: str
+    :return: If successful, all reviews submitted by a customer. Else, an error message.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -470,6 +542,12 @@ def get_reviews_user(user):
 
 @app.route("/flag", methods=["POST"])
 def flag():
+    """
+    Allows to flag a customer's review by either a user or an admin. Need to pass in the post request the flag's value, the reviewed good, and the corresponding username.
+
+    :return: Success message if flag changed successfully. Error message in case of a problem.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
