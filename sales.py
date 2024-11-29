@@ -6,16 +6,36 @@ app = Flask(__name__)
 
 @app.route("/get_available_goods", methods=["GET"])
 def get_available_goods():
+    """
+    Get all goods with a stock greater than 0.
+
+    :return: If success, all the available goods. Else, error message in case of a problem.
+    :rtype: flask.Response
+    """
     response = requests.get("http://127.0.0.1:3000/get_goods")
     return response.content
 
 @app.route("/get_good_details/<int:id>", methods=["GET"])
 def get_good_details(id):
+    """
+    Get a product's details.
+
+    :param id: The product's id.
+    :type id: int
+    :return: If successful, the product's details. Else, an error message.
+    :rtype: flask.Response
+    """
     response = requests.get("http://127.0.0.1:3000/get_good/"+str(id))
     return response.content
 
 @app.route("/record_sales", methods=["POST", "GET"])
 def record_sales():
+    """
+    Register a new transaction. Need to pass in the post request the username, the good, and the quantity. 
+
+    :return: Success message if transaction is successful. Else, error message in case of a problem.
+    :rtype: flask.Response
+    """
     info = request.get_json()
     user = info["user"]
     good = info["good"]

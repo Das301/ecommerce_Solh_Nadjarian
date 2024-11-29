@@ -6,6 +6,12 @@ app = Flask(__name__)
 
 @app.route("/submit_review", methods=["POST", "GET"])
 def submit_review():
+    """
+    Submits a customer's review of a product. Must pass in the post request the user's username, his password, the reviewed good, the review, and the rating.
+
+    :return: Success message if submission is successful. Error message if submission already exists or other error occured.
+    :rtype: flask.Response
+    """
     info = request.get_json()
     user = info["user"]
     password = info["password"]
@@ -27,6 +33,12 @@ def submit_review():
 
 @app.route("/update_review", methods=["PUT", "GET"])
 def update_review():
+    """
+    Updates a customer's review of a product. Must pass in the post request the user's username, his password, the reviewed good, the review, and the rating.
+
+    :return: Success message if update is successful. Error message if submission doesn't exist or other error occured.
+    :rtype: flask.Response
+    """
     info = request.get_json()
     user = info["user"]
     password = info["password"]
@@ -49,6 +61,12 @@ def update_review():
 
 @app.route("/delete_review", methods=["DELETE", "GET"])
 def delete_review():
+    """
+    Deletes a customer's review of a product. Must pass in the post request the user's username, his password, and the reviewed good.
+
+    :return: Success message if delete is successful. Error message if submission doesn't exist or other error occured.
+    :rtype: flask.Response
+    """
     info = request.get_json()
     user = info["user"]
     password = info["password"]
@@ -69,6 +87,12 @@ def delete_review():
 
 @app.route("/admin_delete_review", methods=["DELETE", "GET"])
 def admin_delete_review():
+    """
+    Deletes a customer's review of a product by the admin. Must pass in the post request the user's username, the reviewed good, and the admin's credentials.
+
+    :return: Success message if delete is successful. Error message if submission doesn't exist or other error occured.
+    :rtype: flask.Response
+    """
     info = request.get_json()
     user = info["user"]
     admin_user = info["admin_user"]
@@ -90,6 +114,16 @@ def admin_delete_review():
 
 @app.route("/get_review/<string:user>/<string:good>", methods=["GET"])
 def get_review(user, good):
+    """
+    Get a customer's review of a product.
+
+    :param user: The username of the customer.
+    :type user: str
+    :param good: The reviewed good
+    :type good: str
+    :return: If successful, the review submitted by the user about the product. Else, an error message.
+    :rtype: flask.Response
+    """
     review = requests.get("http://127.0.0.1:3000/get_review/"+user+"/"+good).content
     if review is None:
         return jsonify("This user didn't review this product")
@@ -97,6 +131,14 @@ def get_review(user, good):
 
 @app.route("/get_product_review/<string:good>", methods=["GET"])
 def get_product_review(good):
+    """
+    Get all reviews of a product.
+
+    :param good: The reviewed good
+    :type good: str
+    :return: If successful, the reviews of the product. Else, an error message.
+    :rtype: flask.Response
+    """
     reviews = requests.get("http://127.0.0.1:3000/get_reviews_product/"+good).content
     if len(json.loads(reviews))==0:
         return jsonify("This product doesn't have any reviews")
@@ -104,6 +146,14 @@ def get_product_review(good):
 
 @app.route("/get_user_review/<string:user>", methods=["GET"])
 def get_user_review(user):
+    """
+    Get all reviews submitted by a customer.
+
+    :param user: The username of the customer.
+    :type user: str
+    :return: If successful, all reviews submitted by a customer. Else, an error message.
+    :rtype: flask.Response
+    """
     reviews = requests.get("http://127.0.0.1:3000/get_reviews_user/"+user).content
     if len(json.loads(reviews))==0:
         return jsonify("This user didn't submit any reviews")
@@ -111,6 +161,12 @@ def get_user_review(user):
 
 @app.route("/flag_review", methods=["PUT", "GET"])
 def flag_review():
+    """
+    Allows to flag a customer's review by either a user or an admin. Need to pass in the put request the flag's value, the reviewed good, and the corresponding username.
+
+    :return: Success message if flag changed successfully. Error message in case of a problem.
+    :rtype: flask.Response
+    """
     info = request.get_json()
     response = requests.post("http://127.0.0.1:3000/flag", json=info)
     return response.content
