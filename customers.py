@@ -13,7 +13,14 @@ def get_all_customers():
 
 @app.route("/get_customer/<string:username>", methods=["GET"])
 def get_customer(username):
-    """Fetch a customer by username."""
+    """
+    Fetch a customer by username.
+
+    :param username: The username of the customer to fetch.
+    :type username: str
+    :return: Customer details if found, otherwise a 'not found' message.
+    :rtype: flask.Response
+    """
     response = requests.get(f"http://127.0.0.1:3000/get_customer/{username}")
     if response.status_code == 404:
         return jsonify("Customer not found"), 404
@@ -22,7 +29,12 @@ def get_customer(username):
 
 @app.route("/register_customer", methods=["POST"])
 def register_customer():
-    """Register a new customer."""
+    """
+    Register a new customer.
+
+    :return: Success message if registration is successful.
+    :rtype: flask.Response
+    """
     info = request.get_json()
     response = requests.post("http://127.0.0.1:3000/register_customer", json=info)
     return response.content
@@ -30,7 +42,14 @@ def register_customer():
 
 @app.route("/update_customer/<string:username>", methods=["PATCH"])
 def update_customer(username):
-    """Update a customer's details."""
+    """
+    Update a customer's details.
+
+    :param username: The username of the customer whose details are to be updated.
+    :type username: str
+    :return: Success message if update is successful.
+    :rtype: flask.Response
+    """
     updates = request.get_json()
     response = requests.patch(f"http://127.0.0.1:3000/update_customer/{username}", json=updates)
     return response.content
@@ -38,7 +57,14 @@ def update_customer(username):
 
 @app.route("/delete_customer/<string:username>", methods=["DELETE"])
 def delete_customer(username):
-    """Delete a customer."""
+    """
+    Delete a customer.
+
+    :param username: The username of the customer to delete.
+    :type username: str
+    :return: Success message if deletion is successful, or an error message if the customer is not found.
+    :rtype: flask.Response
+    """
     response = requests.delete(f"http://127.0.0.1:3000/delete_customer/{username}")
     if response.status_code == 404:
         return jsonify("Customer not found"), 404
@@ -47,7 +73,14 @@ def delete_customer(username):
 
 @app.route("/charge_wallet/<string:username>", methods=["PATCH"])
 def charge_wallet(username):
-    """Add funds to a customer's wallet."""
+    """
+    Add funds to a customer's wallet.
+
+    :param username: The username of the customer whose wallet is to be charged.
+    :type username: str
+    :return: Success message if wallet charging is successful.
+    :rtype: flask.Response
+    """
     info = request.get_json()
     response = requests.patch(f"http://127.0.0.1:3000/charge_wallet/{username}", json={"amount": info["amount"]})
     return response.content
@@ -55,7 +88,14 @@ def charge_wallet(username):
 
 @app.route("/deduct_wallet/<string:username>", methods=["PATCH"])
 def deduct_wallet(username):
-    """Deduct funds from a customer's wallet."""
+    """
+    Deduct funds from a customer's wallet.
+
+    :param username: The username of the customer whose wallet is to be deducted.
+    :type username: str
+    :return: Success message if deduction is successful.
+    :rtype: flask.Response
+    """
     info = request.get_json()
     response = requests.patch(f"http://127.0.0.1:3000/deduct_wallet/{username}", json={"amount": info["amount"]})
     return response.content

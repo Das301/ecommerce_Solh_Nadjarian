@@ -4,12 +4,24 @@ import sqlite3
 app = Flask(__name__)
 
 def connect_to_db():
+    """
+    Establish a connection to the SQLite database.
+
+    :return: SQLite connection object
+    :rtype: sqlite3.Connection
+    """
     conn = sqlite3.connect("eCommerce.db")
     return conn
 
+
 @app.route("/get_all_customers", methods=["GET"])
 def get_all_customers():
-    """Fetch all customers."""
+    """
+    Fetch all customers.
+
+    :return: List of all customers in the database or error response.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -21,9 +33,17 @@ def get_all_customers():
         return jsonify({"error": "Database Error"}), 500
     return jsonify(customers)
 
+
 @app.route("/get_customer/<string:username>", methods=["GET"])
 def get_customer(username):
-    """Fetch a customer by username."""
+    """
+    Fetch a customer by username.
+
+    :param username: The username of the customer.
+    :type username: str
+    :return: Customer details or error response if not found.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -38,9 +58,15 @@ def get_customer(username):
         print(e)
         return jsonify({"error": "Database Error"}), 500
 
+
 @app.route("/register_customer", methods=["POST"])
 def register_customer():
-    """Register a new customer."""
+    """
+    Register a new customer.
+
+    :return: Success message or error response.
+    :rtype: flask.Response
+    """
     data = request.get_json()
     try:
         conn = connect_to_db()
@@ -56,9 +82,17 @@ def register_customer():
         print(e)
         return jsonify({"error": "Database Error"}), 500
 
+
 @app.route("/delete_customer/<string:username>", methods=["DELETE"])
 def delete_customer(username):
-    """Delete a customer."""
+    """
+    Delete a customer by username.
+
+    :param username: The username of the customer.
+    :type username: str
+    :return: Success or error response.
+    :rtype: flask.Response
+    """
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -70,9 +104,17 @@ def delete_customer(username):
         print(e)
         return jsonify({"error": "Database Error"}), 500
 
+
 @app.route("/charge_wallet/<string:username>", methods=["PATCH"])
 def charge_wallet(username):
-    """Add funds to a customer's wallet."""
+    """
+    Add funds to a customer's wallet.
+
+    :param username: The username of the customer.
+    :type username: str
+    :return: Success or error response.
+    :rtype: flask.Response
+    """
     data = request.get_json()
     if "amount" not in data:
         return jsonify({"error": "Amount is required"}), 400
@@ -92,9 +134,17 @@ def charge_wallet(username):
         print(e)
         return jsonify({"error": "Database Error"}), 500
 
+
 @app.route("/deduct_wallet/<string:username>", methods=["PATCH"])
 def deduct_wallet(username):
-    """Deduct funds from a customer's wallet."""
+    """
+    Deduct funds from a customer's wallet.
+
+    :param username: The username of the customer.
+    :type username: str
+    :return: Success or error response.
+    :rtype: flask.Response
+    """
     data = request.get_json()
     if "amount" not in data:
         return jsonify({"error": "Amount is required"}), 400
@@ -117,18 +167,24 @@ def deduct_wallet(username):
         print(e)
         return jsonify({"error": "Database Error"}), 500
 
+
 @app.route("/update_customer/<string:username>", methods=["PATCH"])
 def update_customer(username):
-    """Update a customer's information dynamically."""
-    data = request.get_json()
+    """
+    Update a customer's details dynamically.
 
+    :param username: The username of the customer.
+    :type username: str
+    :return: Success or error response.
+    :rtype: flask.Response
+    """
+    data = request.get_json()
     if not data:
         return jsonify({"error": "No fields to update provided"}), 400
 
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
-
         cursor.execute("SELECT * FROM USERS WHERE username = ?", (username,))
         existing_user = cursor.fetchone()
         if not existing_user:
@@ -153,10 +209,16 @@ def update_customer(username):
     except Exception as e:
         print(e)
         return jsonify({"error": "Database Error"}), 500
-    
+
+
 @app.route("/add_good", methods=["POST"])
 def add_good():
-    """Add a new good to the inventory."""
+    """
+    Add a new good to the inventory.
+
+    :return: Success or error response.
+    :rtype: flask.Response
+    """
     data = request.get_json()
     try:
         conn = connect_to_db()
@@ -173,14 +235,21 @@ def add_good():
         print(e)
         return jsonify({"error": "Database Error"}), 500
 
+
 @app.route("/deduct_good/<int:id>", methods=["PATCH"])
 def deduct_good(id):
-    """Deduct a quantity of a good from the inventory."""
+    """
+    Deduct a quantity of a good from the inventory.
+
+    :param id: The ID of the good.
+    :type id: int
+    :return: Success or error response.
+    :rtype: flask.Response
+    """
     data = request.get_json()
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
-
         cursor.execute("SELECT stocks FROM GOODS WHERE id = ?", (id,))
         current_stock = cursor.fetchone()
         if not current_stock:
@@ -198,9 +267,17 @@ def deduct_good(id):
         print(e)
         return jsonify({"error": "Database Error"}), 500
 
+
 @app.route("/update_good/<int:id>", methods=["PATCH"])
 def update_good(id):
-    """Update one or more fields of a good."""
+    """
+    Update details of a good.
+
+    :param id: The ID of the good.
+    :type id: int
+    :return: Success or error response.
+    :rtype: flask.Response
+    """
     data = request.get_json()
     try:
         conn = connect_to_db()
