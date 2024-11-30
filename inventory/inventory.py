@@ -13,7 +13,7 @@ def add_good():
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.post("http://127.0.0.1:3000/add_good", json=info)
+    response = requests.post("http://databaseAPI:3000/add_good", json=info)
     return response.content
 
 
@@ -26,7 +26,7 @@ def deduct_good():
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.patch(f"http://127.0.0.1:3000/deduct_good/{info['id']}", json={"quantity": info["quantity"]})
+    response = requests.patch(f"http://databaseAPI:3000/deduct_good/{info['id']}", json={"quantity": info["quantity"]})
     return response.content
 
 
@@ -39,7 +39,7 @@ def update_good():
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.patch(f"http://127.0.0.1:3000/update_good/{info['id']}", json=info["updates"])
+    response = requests.patch(f"http://databaseAPI:3000/update_good/{info['id']}", json=info["updates"])
     return response.content
 
 

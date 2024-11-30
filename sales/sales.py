@@ -12,7 +12,7 @@ def get_available_goods():
     :return: If success, all the available goods. Else, error message in case of a problem.
     :rtype: flask.Response
     """
-    response = requests.get("http://127.0.0.1:3000/get_goods")
+    response = requests.get("http://databaseAPI:3000/get_goods")
     return response.content
 
 @app.route("/get_good_details/<int:id>", methods=["GET"])
@@ -25,7 +25,7 @@ def get_good_details(id):
     :return: If successful, the product's details. Else, an error message.
     :rtype: flask.Response
     """
-    response = requests.get("http://127.0.0.1:3000/get_good/"+str(id))
+    response = requests.get("http://databaseAPI:3000/get_good/"+str(id))
     return response.content
 
 @app.route("/record_sales", methods=["POST", "GET"])
@@ -41,8 +41,8 @@ def record_sales():
     good = info["good"]
     quantity = info["quantity"]
 
-    customer = json.loads(requests.get("http://127.0.0.1:3000/get_customer/"+user).content)
-    price = json.loads(requests.get("http://127.0.0.1:3000/get_good_price/"+good).content)
+    customer = json.loads(requests.get("http://databaseAPI:3000/get_customer/"+user).content)
+    price = json.loads(requests.get("http://databaseAPI:3000/get_good_price/"+good).content)
     if "error" in customer or "error" in price:
         return jsonify({"error": "Database Error"}), 500
     
@@ -56,7 +56,7 @@ def record_sales():
             "good": good,
             "quantity": quantity,
             "total": total_amount}
-    response = requests.post("http://127.0.0.1:3000/perform_transaction", json=data)
+    response = requests.post("http://databaseAPI:3000/perform_transaction", json=data)
 
     return response.content
 

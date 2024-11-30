@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/get_all_customers", methods=["GET"])
 def get_all_customers():
     """Fetch all customers."""
-    response = requests.get("http://127.0.0.1:3000/get_all_customers")
+    response = requests.get("http://databaseAPI:3000/get_all_customers")
     return response.content
 
 
@@ -21,7 +21,7 @@ def get_customer(username):
     :return: Customer details if found, otherwise a 'not found' message.
     :rtype: flask.Response
     """
-    response = requests.get(f"http://127.0.0.1:3000/get_customer/{username}")
+    response = requests.get(f"http://databaseAPI:3000/get_customer/{username}")
     if response.status_code == 404:
         return jsonify("Customer not found"), 404
     return response.content
@@ -36,7 +36,7 @@ def register_customer():
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.post("http://127.0.0.1:3000/register_customer", json=info)
+    response = requests.post("http://databaseAPI:3000/register_customer", json=info)
     return response.content
 
 
@@ -51,7 +51,7 @@ def update_customer(username):
     :rtype: flask.Response
     """
     updates = request.get_json()
-    response = requests.patch(f"http://127.0.0.1:3000/update_customer/{username}", json=updates)
+    response = requests.patch(f"http://databaseAPI:3000/update_customer/{username}", json=updates)
     return response.content
 
 
@@ -65,7 +65,7 @@ def delete_customer(username):
     :return: Success message if deletion is successful, or an error message if the customer is not found.
     :rtype: flask.Response
     """
-    response = requests.delete(f"http://127.0.0.1:3000/delete_customer/{username}")
+    response = requests.delete(f"http://databaseAPI:3000/delete_customer/{username}")
     if response.status_code == 404:
         return jsonify("Customer not found"), 404
     return response.content
@@ -82,7 +82,7 @@ def charge_wallet(username):
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.patch(f"http://127.0.0.1:3000/charge_wallet/{username}", json={"amount": info["amount"]})
+    response = requests.patch(f"http://databaseAPI:3000/charge_wallet/{username}", json={"amount": info["amount"]})
     return response.content
 
 
@@ -97,7 +97,7 @@ def deduct_wallet(username):
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.patch(f"http://127.0.0.1:3000/deduct_wallet/{username}", json={"amount": info["amount"]})
+    response = requests.patch(f"http://databaseAPI:3000/deduct_wallet/{username}", json={"amount": info["amount"]})
     return response.content
 
 
