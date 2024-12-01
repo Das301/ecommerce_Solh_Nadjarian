@@ -101,5 +101,49 @@ def deduct_wallet(username):
     return response.content
 
 
+@app.route("/add_wishlist/<string:username>", methods=["POST"])
+def add_wishlist(username):
+    """
+    Add a product to the user's wishlist.
+
+    :param username: The username of the user.
+    :type username: str
+    :return: Success message if added successfully, error otherwise.
+    :rtype: flask.Response
+    """
+    info = request.get_json()
+    response = requests.post(f"http://localhost:3000/add_wishlist/{username}", json=info)
+    return response.content
+
+
+@app.route("/view_wishlist/<string:username>", methods=["GET"])
+def view_wishlist(username):
+    """
+    View all products in a user's wishlist.
+
+    :param username: The username of the user.
+    :type username: str
+    :return: Wishlist items as JSON or error message.
+    :rtype: flask.Response
+    """
+    response = requests.get(f"http://databaseAPI:3000/view_wishlist/{username}")
+    return response.content
+
+
+@app.route("/remove_wishlist/<string:username>", methods=["DELETE"])
+def remove_wishlist(username):
+    """
+    Remove a product from the user's wishlist.
+
+    :param username: The username of the user.
+    :type username: str
+    :return: Success message if removed successfully, error otherwise.
+    :rtype: flask.Response
+    """
+    info = request.get_json()
+    response = requests.delete(f"http://databaseAPI:3000/remove_wishlist/{username}", json=info)
+    return response.content
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=5003)

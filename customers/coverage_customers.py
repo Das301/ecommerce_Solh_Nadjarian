@@ -1,5 +1,5 @@
 import unittest
-from testing_customers import app 
+from testing_customers import app
 
 
 class TestCustomersAPI(unittest.TestCase):
@@ -52,6 +52,23 @@ class TestCustomersAPI(unittest.TestCase):
         """Test deducting from a customer's wallet."""
         payload = {"amount": 30}
         response = self.client.patch("/deduct_wallet/testuser", json=payload)
+        self.assertIn(response.status_code, [200, 404])
+
+    def test_add_wishlist(self):
+        """Test adding an item to the customer's wishlist."""
+        payload = {"good": "Test Product"}
+        response = self.client.post("/add_wishlist/testuser", json=payload)
+        self.assertIn(response.status_code, [200, 201, 400])
+
+    def test_view_wishlist(self):
+        """Test viewing the customer's wishlist."""
+        response = self.client.get("/view_wishlist/testuser")
+        self.assertIn(response.status_code, [200, 404])
+
+    def test_remove_wishlist(self):
+        """Test removing an item from the customer's wishlist."""
+        payload = {"good": "Test Product"}
+        response = self.client.delete("/remove_wishlist/testuser", json=payload)
         self.assertIn(response.status_code, [200, 404])
 
 
