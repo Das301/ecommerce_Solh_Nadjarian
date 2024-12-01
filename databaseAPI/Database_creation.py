@@ -52,6 +52,13 @@ cursor.execute("""CREATE TABLE if not exists ADMINS (
                age INT NOT NULL,
                address TEXT NOT NULL)""")
 
+cursor.execute("""CREATE TABLE if not exists WISHLIST (
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
+               user TEXT NOT NULL,
+               good TEXT NOT NULL,
+               FOREIGN KEY (user) REFERENCES USERS(username),
+               FOREIGN KEY (good) REFERENCES GOODS(name))""")
+
 conn.commit()
 
 cursor.execute("INSERT INTO ADMINS (username, password, first_name, last_name, age, address) VALUES ('Das35', '24h_D@yt0n@', 'Dany', 'Solh', 21, 'Beirut, Lebanon')")

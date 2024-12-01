@@ -210,6 +210,92 @@ def update_customer(username):
         print(e)
         return jsonify({"error": "Database Error"}), 500
 
+@app.route("/add_wishlist/<string:username>", methods=["POST"])
+def add_wishlist(username):
+    """
+    Add a product to the user's wishlist.
+
+    :param username: The user's unique username.
+    :type username: str
+    :raises DatabaseError: If there is an issue interacting with the database.
+    :return: JSON response indicating success or failure.
+    :rtype: flask.Response
+    """
+    data = request.get_json()
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM GOODS WHERE name = ?", (data["good"],))
+        good = cursor.fetchone()
+        if not good:
+            return jsonify({"error": "Good not found"}), 404
+
+        cursor.execute("SELECT * FROM WISHLIST WHERE user = ? AND good = ?", (username, data["good"]))
+        exists = cursor.fetchone()
+        if exists:
+            return jsonify({"error": "Good already in wishlist"}), 400
+
+        cursor.execute("INSERT INTO WISHLIST (user, good) VALUES (?, ?)", (username, data["good"]))
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "Good added to wishlist"}), 201
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return jsonify({"error": "Database Error"}), 500
+
+
+@app.route("/view_wishlist/<string:username>", methods=["GET"])
+def view_wishlist(username):
+    """
+    View all items in a user's wishlist.
+
+    :param username: The user's unique username.
+    :type username: str
+    :raises DatabaseError: If there is an issue interacting with the database.
+    :return: JSON response containing wishlist items or an error message.
+    :rtype: flask.Response
+    """
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT good FROM WISHLIST WHERE user = ?", (username,))
+        wishlist = cursor.fetchall()
+        conn.close()
+        return jsonify([item[0] for item in wishlist])
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Database Error"}), 500
+
+
+@app.route("/remove_wishlist/<string:username>", methods=["DELETE"])
+def remove_wishlist(username):
+    """
+    Remove a product from the user's wishlist.
+
+    **Sphinx Style**
+
+    :param username: The user's unique username.
+    :type username: str
+    :raises DatabaseError: If there is an issue interacting with the database.
+    :return: JSON response indicating success or failure.
+    :rtype: flask.Response
+    """
+    data = request.get_json()
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM WISHLIST WHERE user = ? AND good = ?", (username, data["good"]))
+        if cursor.rowcount == 0:
+            return jsonify({"error": "Good not found in wishlist"}), 404
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "Good removed from wishlist"}), 200
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return jsonify({"error": "Database Error"}), 500
 
 @app.route("/add_good", methods=["POST"])
 def add_good():
