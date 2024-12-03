@@ -13,7 +13,7 @@ def get_all_customers():
     :return: JSON response containing all customers or an error message.
     :rtype: flask.Response
     """
-    response = requests.get("http://databaseAPI:3000/get_all_customers")
+    response = requests.get("http://localhost:3000/get_all_customers")
     return response.content
 
 
@@ -28,7 +28,7 @@ def get_customer(username):
     :return: Customer details if found, otherwise an error message.
     :rtype: flask.Response
     """
-    response = requests.get(f"http://databaseAPI:3000/get_customer/{username}")
+    response = requests.get(f"http://localhost:3000/get_customer/{username}")
     if response.status_code == 404:
         return jsonify({"error": "Customer not found"}), 404
     return response.content
@@ -44,7 +44,7 @@ def register_customer():
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.post("http://databaseAPI:3000/register_customer", json=info)
+    response = requests.post("http://localhost:3000/register_customer", json=info)
     return response.content
 
 
@@ -60,7 +60,7 @@ def add_wishlist(username):
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.post(f"http://databaseAPI:3000/add_wishlist/{username}", json=info)
+    response = requests.post(f"http://localhost:3000/add_wishlist/{username}", json=info)
     return response.content
 
 
@@ -75,7 +75,7 @@ def view_wishlist(username):
     :return: JSON response containing the wishlist items or an error message.
     :rtype: flask.Response
     """
-    response = requests.get(f"http://databaseAPI:3000/view_wishlist/{username}")
+    response = requests.get(f"http://localhost:3000/view_wishlist/{username}")
     return response.content
 
 
@@ -91,7 +91,7 @@ def remove_wishlist(username):
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.delete(f"http://databaseAPI:3000/remove_wishlist/{username}", json=info)
+    response = requests.delete(f"http://localhost:3000/remove_wishlist/{username}", json=info)
     return response.content
 
 
@@ -107,7 +107,7 @@ def update_customer(username):
     :rtype: flask.Response
     """
     updates = request.get_json()
-    response = requests.patch(f"http://databaseAPI:3000/update_customer/{username}", json=updates)
+    response = requests.patch(f"http://localhost:3000/update_customer/{username}", json=updates)
     return response.content
 
 
@@ -122,7 +122,7 @@ def delete_customer(username):
     :return: Success message if deletion is successful, otherwise an error message.
     :rtype: flask.Response
     """
-    response = requests.delete(f"http://databaseAPI:3000/delete_customer/{username}")
+    response = requests.delete(f"http://localhost:3000/delete_customer/{username}")
     if response.status_code == 404:
         return jsonify({"error": "Customer not found"}), 404
     return response.content
@@ -140,7 +140,7 @@ def charge_wallet(username):
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.patch(f"http://databaseAPI:3000/charge_wallet/{username}", json={"amount": info["amount"]})
+    response = requests.patch(f"http://localhost:3000/charge_wallet/{username}", json={"amount": info["amount"]})
     return response.content
 
 
@@ -156,7 +156,7 @@ def deduct_wallet(username):
     :rtype: flask.Response
     """
     info = request.get_json()
-    response = requests.patch(f"http://databaseAPI:3000/deduct_wallet/{username}", json={"amount": info["amount"]})
+    response = requests.patch(f"http://localhost:3000/deduct_wallet/{username}", json={"amount": info["amount"]})
     return response.content
 
 

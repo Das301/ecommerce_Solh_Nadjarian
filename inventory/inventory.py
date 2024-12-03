@@ -43,5 +43,28 @@ def update_good():
     return response.content
 
 
+@app.route("/health/inventory", methods=["GET"])
+def health_check_inventory():
+    """
+    Health check for the inventory service.
+
+    :return: JSON response indicating the health status of the inventory service.
+    :rtype: flask.Response
+    """
+    status = {"service": "inventory", "status": "ok"}
+    try:
+        response = requests.get("http://databaseAPI:3000/health")
+        if response.status_code == 200:
+            status["databaseAPI"] = "reachable"
+        else:
+            status["status"] = "degraded"
+            status["databaseAPI"] = "unreachable"
+    except requests.exceptions.RequestException as e:
+        print(e)
+        status["status"] = "degraded"
+        status["databaseAPI"] = "unreachable"
+    return jsonify(status), 200 if status["status"] == "ok" else 503
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5004, debug=True)

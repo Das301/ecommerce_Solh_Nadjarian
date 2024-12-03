@@ -4,6 +4,7 @@ import json
 
 app = Flask(__name__)
 
+
 @app.route("/get_all_customers", methods=["GET"])
 def get_all_customers():
     """Fetch all customers."""

@@ -13,7 +13,7 @@ def connect_to_db():
     conn = sqlite3.connect("eCommerce.db")
     return conn
 
-
+#service 1
 @app.route("/get_all_customers", methods=["GET"])
 def get_all_customers():
     """
@@ -274,8 +274,6 @@ def remove_wishlist(username):
     """
     Remove a product from the user's wishlist.
 
-    **Sphinx Style**
-
     :param username: The user's unique username.
     :type username: str
     :raises DatabaseError: If there is an issue interacting with the database.
@@ -296,6 +294,8 @@ def remove_wishlist(username):
         print(e)
         conn.rollback()
         return jsonify({"error": "Database Error"}), 500
+
+#service 2
 
 @app.route("/add_good", methods=["POST"])
 def add_good():
@@ -385,6 +385,8 @@ def update_good(id):
         print(e)
         return jsonify({"error": "Database Error"}), 500
     
+
+#service 3
 
 @app.route("/get_goods", methods=["POST", "GET"])
 def get_goods():
@@ -479,6 +481,9 @@ def perform_transaction():
         return jsonify({"error": "Database Error"}), 500
     
     return jsonify(message)
+
+#service 4
+
 
 @app.route("/submit", methods=["POST"])
 def submit():

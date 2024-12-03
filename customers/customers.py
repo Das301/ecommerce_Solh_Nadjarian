@@ -4,6 +4,37 @@ import json
 
 app = Flask(__name__)
 
+@app.route("/health/customers", methods=["GET"])
+def health_check():
+    """
+    Health Check API for monitoring the service.
+
+    :return: JSON response indicating the health status of the service.
+    :rtype: flask.Response
+    """
+    try:
+        response = requests.get("http://databseAPI:3000/get_all_customers", timeout=3)
+        if response.status_code == 200:
+            return jsonify({
+                "status": "ok",
+                "service": "customer",
+                "database": "connected"
+            }), 200
+        else:
+            return jsonify({
+                "status": "degraded",
+                "service": "customer",
+                "database": "unreachable"
+            }), 503
+    except requests.exceptions.RequestException as e:
+        print(f"Health Check Error: {e}")
+        return jsonify({
+            "status": "error",
+            "service": "customer",
+            "database": "unreachable"
+        }), 500
+    
+
 @app.route("/get_all_customers", methods=["GET"])
 def get_all_customers():
     """Fetch all customers."""
